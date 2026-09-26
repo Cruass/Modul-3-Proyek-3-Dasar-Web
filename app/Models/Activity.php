@@ -24,11 +24,11 @@ class Activity extends Model
     public function scopeFilterStatus($query, $status)
     {
         $validStatuses = ['Planned', 'Ongoing', 'Done'];
-        
+
         if (in_array($status, $validStatuses)) {
             return $query->where('status', $status);
         }
-        
+
         return $query;
     }
 }

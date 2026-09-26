@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Activity;
-use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
+use App\Models\Activity;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ActivityController extends Controller
 {
@@ -17,7 +17,7 @@ class ActivityController extends Controller
             ->filterStatus($request->query('status'))
             ->orderBy('activity_date')
             ->get();
-            
+
         return view('activities.index', compact('activities'));
     }
 
@@ -29,6 +29,7 @@ class ActivityController extends Controller
     public function store(StoreActivityRequest $request): RedirectResponse
     {
         Activity::create($request->validated());
+
         return redirect()->route('activities.index')->with('success', 'Kegiatan berhasil ditambahkan!');
     }
 
@@ -45,12 +46,14 @@ class ActivityController extends Controller
     public function update(UpdateActivityRequest $request, Activity $activity): RedirectResponse
     {
         $activity->update($request->validated());
+
         return redirect()->route('activities.index')->with('success', 'Kegiatan berhasil diperbarui!');
     }
 
     public function destroy(Activity $activity): RedirectResponse
     {
         $activity->delete();
+
         return redirect()->route('activities.index')->with('success', 'Kegiatan berhasil dihapus!');
     }
 }
